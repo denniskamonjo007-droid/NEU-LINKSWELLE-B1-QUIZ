@@ -1,0 +1,20 @@
+{
+  "id": "/",
+  "name": "Linkswelle B1 Quiz",
+  "short_name": "Linkswelle",
+  "description": "Interactive German B1 Quiz, Vocabulary, and Grammar Trainer with Offline Support",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "theme_color": "#10b981",
+  "background_color": "#0f172a",
+  "icons": [
+    {
+      "src": "/icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    }
+  ]
+}

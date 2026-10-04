@@ -1,0 +1,6 @@
+{
+  "name": "Linkswelle B1 Quiz",
+  "description": "Interactive German B1 Quiz, Vocabulary Trainer, Grammar Exercises, and Flashcards with Offline Support.",
+  "requestFramePermissions": ["microphone"],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
