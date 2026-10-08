@@ -19,25 +19,31 @@ import { workplaceLawSentences } from './sentences/topic_workplace_law.js';
 import { healthcareSentences } from './sentences/topic_healthcare.js';
 import { prepositionalVerbsSentences } from './sentences/topic_prepositional_verbs.js';
 
+// Sentence expansions: 105 sentences per topic = 210 questions per topic (+200+ in each topic)
+import { expansionPart1 } from './sentences/expansion_part1.js';
+import { expansionPart2 } from './sentences/expansion_part2.js';
+import { expansionPart3 } from './sentences/expansion_part3.js';
+import { expansionPart4 } from './sentences/expansion_part4.js';
+
 export const SENTENCE_EXERCISES = {
-  "Daily Life & Home": dailyLifeSentences,
-  "Work & Education": workEducationSentences,
-  "People & Relationships": peopleRelationshipsSentences,
-  "Travel & Transportation": travelTransportSentences,
-  "Communication": communicationSentences,
-  "Food & Dining": foodDiningSentences,
-  "Health & Body": healthBodySentences,
-  "Money & Shopping": moneyShoppingSentences,
-  "Time & Schedule": timeScheduleSentences,
-  "Environment & Nature": environmentNatureSentences,
-  "Leisure & Culture": leisureCultureSentences,
-  "Emotions & Opinions": emotionsOpinionsSentences,
-  "Technology & Media": technologyMediaSentences,
-  "Society & Law": societyLawSentences,
-  "Buildings & Places": buildingsPlacesSentences,
-  "Cause & Effect": causeEffectSentences,
-  "Bureaucracy & Official Documents": bureaucracySentences,
-  "Workplace & Labor Law": workplaceLawSentences,
-  "Healthcare & Medical Terms": healthcareSentences,
-  "Verbs with Fixed Prepositions": prepositionalVerbsSentences
+  "Daily Life & Home": [...dailyLifeSentences, ...(expansionPart1["Daily Life & Home"] || [])],
+  "Work & Education": [...workEducationSentences, ...(expansionPart1["Work & Education"] || [])],
+  "People & Relationships": [...peopleRelationshipsSentences, ...(expansionPart1["People & Relationships"] || [])],
+  "Travel & Transportation": [...travelTransportSentences, ...(expansionPart1["Travel & Transportation"] || [])],
+  "Communication": [...communicationSentences, ...(expansionPart1["Communication"] || [])],
+  "Food & Dining": [...foodDiningSentences, ...(expansionPart2["Food & Dining"] || [])],
+  "Health & Body": [...healthBodySentences, ...(expansionPart2["Health & Body"] || [])],
+  "Money & Shopping": [...moneyShoppingSentences, ...(expansionPart2["Money & Shopping"] || [])],
+  "Time & Schedule": [...timeScheduleSentences, ...(expansionPart2["Time & Schedule"] || [])],
+  "Environment & Nature": [...environmentNatureSentences, ...(expansionPart3["Environment & Nature"] || [])],
+  "Leisure & Culture": [...leisureCultureSentences, ...(expansionPart3["Leisure & Culture"] || [])],
+  "Emotions & Opinions": [...emotionsOpinionsSentences, ...(expansionPart3["Emotions & Opinions"] || [])],
+  "Technology & Media": [...technologyMediaSentences, ...(expansionPart3["Technology & Media"] || [])],
+  "Society & Law": [...societyLawSentences, ...(expansionPart3["Society & Law"] || [])],
+  "Buildings & Places": [...buildingsPlacesSentences, ...(expansionPart3["Buildings & Places"] || [])],
+  "Cause & Effect": [...causeEffectSentences, ...(expansionPart4["Cause & Effect"] || [])],
+  "Bureaucracy & Official Documents": [...bureaucracySentences, ...(expansionPart4["Bureaucracy & Official Documents"] || [])],
+  "Workplace & Labor Law": [...workplaceLawSentences, ...(expansionPart4["Workplace & Labor Law"] || [])],
+  "Healthcare & Medical Terms": [...healthcareSentences, ...(expansionPart4["Healthcare & Medical Terms"] || [])],
+  "Verbs with Fixed Prepositions": [...prepositionalVerbsSentences, ...(expansionPart4["Verbs with Fixed Prepositions"] || [])]
 };

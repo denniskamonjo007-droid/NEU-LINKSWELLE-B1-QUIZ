@@ -4,6 +4,8 @@ import { workplaceLawVocab } from './topics/workplaceLaw.js';
 import { healthcareVocab } from './topics/healthcare.js';
 import { prepositionalVerbsVocab } from './topics/prepositionalVerbs.js';
 import { vocabExtensions } from './topics/vocabExtensions.js';
+import { vocabPlus40 } from './topics/vocabPlus40.js';
+import { vocabFromB1Textbook } from './topics/vocabFromB1Textbook.js';
 
 export const VOCAB = {
   "Daily Life & Home": [
@@ -823,6 +825,20 @@ export const VOCAB = {
 
 // Merge extensions to ensure every vocabulary topic has at least 70 words
 Object.entries(vocabExtensions).forEach(([topic, extraWords]) => {
+  if (VOCAB[topic]) {
+    VOCAB[topic] = [...VOCAB[topic], ...extraWords];
+  }
+});
+
+// Merge 40-word expansion for each of the 20 topics
+Object.entries(vocabPlus40).forEach(([topic, extraWords]) => {
+  if (VOCAB[topic]) {
+    VOCAB[topic] = [...VOCAB[topic], ...extraWords];
+  }
+});
+
+// Merge words extracted from the B1 textbook chat log
+Object.entries(vocabFromB1Textbook).forEach(([topic, extraWords]) => {
   if (VOCAB[topic]) {
     VOCAB[topic] = [...VOCAB[topic], ...extraWords];
   }

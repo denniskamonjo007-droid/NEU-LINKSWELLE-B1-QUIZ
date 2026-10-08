@@ -219,6 +219,8 @@ export function startWeakWordsTraining() {
 
 export function renderQuiz(container) {
   const topicName = state.selectedTopic;
+  const tIdx = Object.keys(VOCAB).indexOf(topicName);
+  const topicNumStr = tIdx >= 0 ? (tIdx + 1 < 10 ? `0${tIdx + 1}` : `${tIdx + 1}`) : '';
   const mode = state.activeQuizMode;
   const questions = state.questions;
   const currentIdx = state.currentQuestionIdx;
@@ -291,7 +293,9 @@ export function renderQuiz(container) {
           </button>
           <div class="flex-1 min-w-0">
             <h2 class="truncate text-base font-extrabold flex items-center gap-1.5 leading-none text-slate-900 dark:text-white">
-              <span>${ICONS[topicName] || '📖'}</span> ${topicName}
+              <span>${ICONS[topicName] || '📖'}</span>
+              ${topicNumStr ? `<span class="px-1.5 py-0.5 rounded-md text-[10px] font-mono font-black bg-indigo-50 text-indigo-700 dark:bg-indigo-950/60 dark:text-indigo-300 border border-indigo-200/40">Thema ${topicNumStr}</span>` : ''}
+              <span class="truncate">${topicName}</span>
             </h2>
             <p class="text-[10px] mt-1 uppercase tracking-wider font-extrabold theme-text">
               ${mode.replace('_level_', ' • Level ')}

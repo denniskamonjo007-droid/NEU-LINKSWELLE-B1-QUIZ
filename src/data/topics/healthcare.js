@@ -78,5 +78,22 @@ export const healthcareVocab = [
   {"g": "unbedenklich", "e": "harmless / safe", "t": "a"},
   {"g": "bettlägerig", "e": "bedridden", "t": "a"},
   {"g": "erblich", "e": "hereditary / genetic", "t": "a"},
-  {"g": "körperlich", "e": "physical / bodily", "t": "a"}
+  {"g": "körperlich", "e": "physical / bodily", "t": "a"},
+
+  // Additional essential B1 medical terms
+  {"g": "die Betäubung", "e": "the anesthesia / numbness", "t": "n"},
+  {"g": "der Verbandskasten", "e": "the first aid kit", "t": "n"},
+  {"g": "die Spritze", "e": "the syringe / injection", "t": "n"},
+  {"g": "die Vorsorgeuntersuchung", "e": "the preventive medical checkup", "t": "n"},
+  {"g": "der Befund", "e": "the medical diagnostic findings", "t": "n"},
+  {"g": "die Vorerkrankung", "e": "the pre-existing medical condition", "t": "n"},
+  {"g": "die Nebenwirkung", "e": "the side effect", "t": "n"},
+  {"g": "der Rettungswagen", "e": "the ambulance vehicle", "t": "n"},
+  {"g": "die Notaufnahme", "e": "the emergency room / ER", "t": "n"},
+  {"g": "die Entzündung", "e": "the inflammation", "t": "n"},
+  {"g": "betäuben", "e": "to anesthetize / numb", "t": "v"},
+  {"g": "vorbeugen", "e": "to prevent / guard against", "t": "v"},
+  {"g": "eincremen", "e": "to apply cream / ointment", "t": "v"},
+  {"g": "gesundheitsschädlich", "e": "harmful to health", "t": "a"},
+  {"g": "arbeitsunfähig", "e": "unable to work due to illness", "t": "a"}
 ];

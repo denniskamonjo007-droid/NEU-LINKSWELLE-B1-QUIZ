@@ -19,7 +19,9 @@ import { renderProfile } from './views/profile.js';
 import { renderSettings } from './views/settings.js';
 import { renderGrammar } from './views/grammar.js';
 import { renderGrammarQuiz } from './views/grammarQuiz.js';
+import { renderSRSReview } from './views/srsReview.js';
 import { precacheQuizContent } from './utils/serviceWorker';
+import { getSRSMetrics } from './utils/srsManager.js';
 
 export default function App() {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -74,6 +76,8 @@ export default function App() {
       renderQuiz(el);
     } else if (state.screen === 'grammar-quiz') {
       renderGrammarQuiz(el);
+    } else if (state.screen === 'srs-review') {
+      renderSRSReview(el);
     } else {
       // Screen is 'home' -> dispatch by tab
       switch (state.tab) {
@@ -103,6 +107,8 @@ export default function App() {
     }
   }, [currentTab, currentScreen, renderTick]);
 
+  const srsMetrics = getSRSMetrics();
+
   const navItems = [
     { id: 'home', icon: '🏠', label: t('Home', 'Start') },
     { id: 'grammar', icon: '📐', label: t('Grammar', 'Grammatik') },
@@ -112,7 +118,7 @@ export default function App() {
     { id: 'profile', icon: '👤', label: t('Profile', 'Profil') }
   ];
 
-  const isFullScreenSubscreen = currentScreen === 'quiz' || currentScreen === 'grammar-quiz';
+  const isFullScreenSubscreen = currentScreen === 'quiz' || currentScreen === 'grammar-quiz' || currentScreen === 'srs-review';
 
   return (
     <div className="min-h-screen bg-slate-50 text-slate-900 dark:bg-slate-950 dark:text-slate-100 flex flex-col font-sans transition-colors duration-200">
@@ -164,7 +170,7 @@ export default function App() {
                   <span className="text-lg leading-none">{item.icon}</span>
                   <span className="text-[10px] tracking-tight mt-1">{item.label}</span>
                   {item.count && item.count > 0 ? (
-                    <span className="absolute -top-0.5 right-1 px-1.5 py-0.2 rounded-full bg-emerald-500 text-white text-[8px] font-black leading-tight">
+                    <span className="absolute -top-0.5 right-1 px-1.5 py-0.2 rounded-full text-white text-[8px] font-black leading-tight bg-emerald-500">
                       {item.count}
                     </span>
                   ) : null}

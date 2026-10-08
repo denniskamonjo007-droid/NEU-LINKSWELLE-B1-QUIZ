@@ -82,5 +82,22 @@ export const prepositionalVerbsVocab = [
   {"g": "enttäuscht von", "e": "disappointed by (+ Dat)", "t": "a"},
   {"g": "überzeugt von", "e": "convinced of (+ Dat)", "t": "a"},
   {"g": "bereit zu", "e": "ready / prepared for (+ Dat)", "t": "a"},
-  {"g": "fähig zu", "e": "capable of (+ Dat)", "t": "a"}
+  {"g": "fähig zu", "e": "capable of (+ Dat)", "t": "a"},
+
+  // Additional essential B1 verbs with prepositions
+  {"g": "sich fürchten vor", "e": "to be afraid of (+ Dat)", "t": "v"},
+  {"g": "zweifeln an", "e": "to doubt / have doubts about (+ Dat)", "t": "v"},
+  {"g": "leiden an", "e": "to suffer from (disease) (+ Dat)", "t": "v"},
+  {"g": "leiden unter", "e": "to suffer under (stress/conditions) (+ Dat)", "t": "v"},
+  {"g": "erkennen an", "e": "to recognize by (+ Dat)", "t": "v"},
+  {"g": "sich gewöhnen an", "e": "to get accustomed to (+ Akk)", "t": "v"},
+  {"g": "sich verlassen auf", "e": "to rely on (+ Akk)", "t": "v"},
+  {"g": "achten auf", "e": "to pay attention / watch out for (+ Akk)", "t": "v"},
+  {"g": "hoffen auf", "e": "to hope for (+ Akk)", "t": "v"},
+  {"g": "verzichten auf", "e": "to do without / forfeit (+ Akk)", "t": "v"},
+  {"g": "sich bedanken bei", "e": "to thank (someone) (+ Dat)", "t": "v"},
+  {"g": "sich beschweren über", "e": "to complain about (+ Akk)", "t": "v"},
+  {"g": "sich erkundigen nach", "e": "to inquire about (+ Dat)", "t": "v"},
+  {"g": "dankbar für", "e": "grateful for (+ Akk)", "t": "a"},
+  {"g": "geeignet für", "e": "suitable / qualified for (+ Akk)", "t": "a"}
 ];

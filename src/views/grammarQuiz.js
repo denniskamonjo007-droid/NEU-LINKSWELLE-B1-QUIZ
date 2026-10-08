@@ -2,6 +2,7 @@
 import { state, setScreen, t, recordGrammarSessionResult, notify } from '../state.js';
 import { speak } from '../utils/audio.js';
 import { getGrammarTopicById, shuffleArray } from '../data/grammar/index.js';
+import { getGrammarPromptTranslation } from '../data/grammar/promptTranslations.js';
 
 let activeTopicId = 'nebensaetze';
 let testTitle = '';
@@ -75,6 +76,7 @@ export function renderGrammarQuiz(container) {
   }
 
   const q = questions[currentIdx];
+  const promptEn = getGrammarPromptTranslation(q);
   const total = questions.length;
   const currentAnswer = answers[currentIdx];
   const hasAnswered = currentAnswer !== null;
@@ -181,6 +183,17 @@ export function renderGrammarQuiz(container) {
             <h3 class="text-xl font-black mt-2 text-slate-900 dark:text-white leading-snug">
               ${q.type === 'error_correction' ? renderErrorCorrectionPrompt(q, hasAnswered, currentAnswer) : q.prompt}
             </h3>
+
+            ${promptEn ? `
+              <div class="mt-2.5 flex items-start gap-2 p-2.5 rounded-xl bg-indigo-50/70 dark:bg-indigo-950/40 border border-indigo-150 dark:border-indigo-900/50 text-slate-700 dark:text-slate-300">
+                <span class="shrink-0 px-1.5 py-0.5 rounded text-[9.5px] font-black uppercase tracking-wider bg-indigo-200/80 text-indigo-900 dark:bg-indigo-900/70 dark:text-indigo-200">
+                  EN
+                </span>
+                <p class="text-xs font-semibold leading-relaxed text-indigo-950 dark:text-indigo-200">
+                  ${promptEn}
+                </p>
+              </div>
+            ` : ''}
           </div>
 
           <!-- Interactive Question Type Dispatch -->

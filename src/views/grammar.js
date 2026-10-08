@@ -100,7 +100,7 @@ export function renderGrammar(container) {
       <div class="px-4 space-y-4">
         <div class="flex items-center justify-between px-1">
           <h2 class="text-xs font-black tracking-wider text-slate-400 dark:text-slate-500 uppercase">
-            ${t('B1 GRAMMAR TOPICS (100 QUESTIONS EACH)', 'B1-GRAMMATIKTHEMEN (JE 100 FRAGEN)')}
+            ${t('B1 GRAMMAR MASTER CURRICULUM (17 TOPICS)', 'B1-GRAMMATIK GESAMTCURRICULUM (17 THEMEN)')}
           </h2>
           <span class="text-[10px] text-slate-400 font-bold">
             ${GRAMMAR_TOPICS.length} ${t('topics', 'Themen')}

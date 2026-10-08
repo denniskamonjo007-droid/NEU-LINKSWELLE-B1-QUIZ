@@ -7,9 +7,12 @@ let selectedTypeFilter = 'all'; // 'all' | 'n' | 'v' | 'a'
 
 export function renderSearch(container) {
   const allEntries = [];
+  const topicKeys = Object.keys(VOCAB);
   Object.entries(VOCAB).forEach(([topicName, words]) => {
+    const tIdx = topicKeys.indexOf(topicName);
+    const topicNumStr = tIdx >= 0 ? (tIdx + 1 < 10 ? `0${tIdx + 1}` : `${tIdx + 1}`) : '';
     words.forEach(w => {
-      allEntries.push({ ...w, topic: topicName });
+      allEntries.push({ ...w, topic: topicName, topicNum: topicNumStr });
     });
   });
 
@@ -87,7 +90,7 @@ export function renderSearch(container) {
                 </span>
               </div>
               <p class="text-xs text-gray-500 dark:text-slate-400 mt-0.5 capitalize truncate">${item.e}</p>
-              <span class="text-[9.5px] text-slate-400 font-mono">${item.topic}</span>
+              <span class="text-[9.5px] text-slate-400 font-mono">${item.topicNum ? `[${item.topicNum}] ` : ''}${item.topic}</span>
             </div>
             <div class="flex items-center gap-2 shrink-0">
               <button data-speech-text="${item.g}" class="search-audio-btn w-8 h-8 rounded-xl bg-gray-100 hover:bg-gray-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 flex items-center justify-center transition cursor-pointer">

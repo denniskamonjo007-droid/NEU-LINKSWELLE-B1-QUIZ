@@ -13,6 +13,13 @@ import { PLUSQUAMPERFEKT_TOPIC } from './plusquamperfekt.js';
 import { PARTIZIPIEN_TOPIC } from './partizipien.js';
 import { PASSIV_ALTERNATIVEN_TOPIC } from './passivAlternativen.js';
 import { REFLEXIVE_VERBEN_TOPIC } from './reflexiveVerben.js';
+import { WORTBILDUNG_TOPIC } from './wortbildung.js';
+import { PRAETERITUM_VERBEN_TOPIC } from './praeteritumVerben.js';
+import { SATZGLIEDER_TEKAMOLO_TOPIC } from './satzgliederTekamolo.js';
+import { GENITIV_TOPIC } from './genitiv.js';
+import { FUTUR1_TOPIC } from './futur1.js';
+import { PRONOMINALADVERBIEN_TOPIC } from './pronominaladverbien.js';
+import { B1_MASTER_EXAM_TOPIC } from './b1MasterExam.js';
 
 export const GRAMMAR_TOPICS = [
   NEBENSAETZE_TOPIC,
@@ -28,7 +35,14 @@ export const GRAMMAR_TOPICS = [
   PLUSQUAMPERFEKT_TOPIC,
   PARTIZIPIEN_TOPIC,
   PASSIV_ALTERNATIVEN_TOPIC,
-  REFLEXIVE_VERBEN_TOPIC
+  REFLEXIVE_VERBEN_TOPIC,
+  WORTBILDUNG_TOPIC,
+  PRAETERITUM_VERBEN_TOPIC,
+  SATZGLIEDER_TEKAMOLO_TOPIC,
+  GENITIV_TOPIC,
+  FUTUR1_TOPIC,
+  PRONOMINALADVERBIEN_TOPIC,
+  B1_MASTER_EXAM_TOPIC
 ];
 
 export const QUESTION_TYPES = [

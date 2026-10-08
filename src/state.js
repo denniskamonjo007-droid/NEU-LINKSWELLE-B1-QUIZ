@@ -113,14 +113,13 @@ export const state = {
 
   // Navigation & Screens
   tab: 'home', // 'home' | 'grammar' | 'stats' | 'search' | 'saved' | 'profile' | 'settings'
-  screen: 'home', // 'home' | 'topic' | 'quiz' | 'flashcard' | 'grammar-quiz'
+  screen: 'home', // 'home' | 'topic' | 'quiz' | 'grammar-quiz' | 'srs-review'
   selectedTopic: '',
   selectedModeForLevels: null,
   showSettings: false,
 
   // Active Quiz State
   activeQuizMode: 'meaning',
-  activeFlashcardLevel: null,
   questions: [],
   currentQuestionIdx: 0,
   answers: [],

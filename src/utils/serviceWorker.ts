@@ -202,7 +202,8 @@ export async function precacheQuizContent(): Promise<{ success: boolean; count: 
       '/src/views/quiz.js',
       '/src/views/topic.js',
       '/src/views/grammar.js',
-      '/src/views/grammarQuiz.js'
+      '/src/views/grammarQuiz.js',
+      '/src/views/srsReview.js'
     ];
 
     let cachedCount = 0;

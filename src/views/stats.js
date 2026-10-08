@@ -2,6 +2,8 @@ import { state, t, setTab, getGrammarTopicMetrics } from '../state.js';
 import { startWeakWordsTraining } from './quiz.js';
 import { VOCAB } from '../data/vocab.js';
 import { GRAMMAR_TOPICS } from '../data/grammar/index.js';
+import { getSRSMetrics } from '../utils/srsManager.js';
+import { startSRSReviewSession } from './srsReview.js';
 
 // Icons mapping for topics
 const ICONS = {
@@ -44,32 +46,7 @@ export function renderStats(container) {
   };
 
   const stat = getOverallProgressDetails();
-
-  // SM-2 Memory Matrix
-  const srsEntries = Object.entries(state.srs || {});
-  const now = Date.now();
-  let srsDue = 0;
-  let srsLearning = 0;
-  let srsMature = 0;
-  let totalEase = 0;
-  let srsCount = 0;
-
-  srsEntries.forEach(([key, rec]) => {
-    if (rec && rec.lastReviewed) {
-      srsCount++;
-      totalEase += rec.ease || 2.5;
-      if (rec.nextReview <= now) {
-        srsDue++;
-      }
-      if ((rec.interval || 0) > 6) {
-        srsMature++;
-      } else {
-        srsLearning++;
-      }
-    }
-  });
-
-  const avgEase = srsCount > 0 ? (totalEase / srsCount).toFixed(2) : '2.50';
+  const srsMetrics = getSRSMetrics();
 
   // Compute last 28 days list for studies heatmap
   const getHeatmapCells = () => {
@@ -132,6 +109,43 @@ export function renderStats(container) {
           </div>
         </div>
 
+        <!-- Spaced Repetition (SRS / Anki-Style) Daily Memory Matrix -->
+        <div class="rounded-2xl border border-indigo-200/60 bg-gradient-to-br from-indigo-50/50 via-white to-purple-50/30 p-5 dark:bg-slate-900 dark:border-slate-800 shadow-xs text-left">
+          <div class="flex items-center justify-between mb-3">
+            <div>
+              <h3 class="text-xs font-black tracking-wider text-indigo-700 dark:text-indigo-400 uppercase flex items-center gap-1.5">
+                <span>🧠</span> ${t('SPACED REPETITION (SM-2 / ANKI)', 'SPACED REPETITION (SM-2 / ANKI)')}
+              </h3>
+              <p class="text-[10px] text-slate-500 dark:text-slate-400 mt-0.5 font-semibold">
+                ${srsMetrics.dueCount > 0 ? `⏰ ${srsMetrics.dueCount} ${t('cards due today for review', 'Karten heute zur Wiederholung fällig')}` : `✅ ${t('All cards reviewed for today!', 'Alle Karten für heute wiederholt!')}`}
+              </p>
+            </div>
+            <button id="stats-start-srs-btn" class="px-2.5 py-1 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white text-[11px] font-black transition cursor-pointer shadow-xs active:scale-95">
+              ${srsMetrics.dueCount > 0 ? `${t('Review', 'Wiederholen')} (${srsMetrics.dueCount}) ›` : `${t('Review Ahead', 'Wiederholen')} ›`}
+            </button>
+          </div>
+
+          <div class="grid grid-cols-3 gap-2 mt-4 text-center">
+            <div class="p-3 rounded-xl bg-amber-50 dark:bg-amber-950/40 border border-amber-200/40">
+              <span class="text-[9.5px] font-black uppercase text-amber-700 dark:text-amber-400 block">${t('Due Today', 'Heute fällig')}</span>
+              <span class="text-xl font-black text-amber-900 dark:text-amber-200">${srsMetrics.dueCount}</span>
+            </div>
+            <div class="p-3 rounded-xl bg-blue-50 dark:bg-blue-950/40 border border-blue-200/40">
+              <span class="text-[9.5px] font-black uppercase text-blue-700 dark:text-blue-400 block">${t('Learning', 'Lernphase')}</span>
+              <span class="text-xl font-black text-blue-900 dark:text-blue-200">${srsMetrics.learningCount}</span>
+            </div>
+            <div class="p-3 rounded-xl bg-emerald-50 dark:bg-emerald-950/40 border border-emerald-200/40">
+              <span class="text-[9.5px] font-black uppercase text-emerald-700 dark:text-emerald-400 block">${t('Mature (30d+)', 'Gemeistert')}</span>
+              <span class="text-xl font-black text-emerald-900 dark:text-emerald-200">${srsMetrics.matureCount}</span>
+            </div>
+          </div>
+
+          <div class="mt-3.5 pt-3 border-t border-indigo-150 dark:border-indigo-900/40 flex items-center justify-between text-[11px] font-bold text-slate-500 dark:text-slate-400">
+            <span>${t('Retention Accuracy:', 'Erfolgsquote:')} <strong class="text-indigo-600 dark:text-indigo-400">${srsMetrics.retentionRate}%</strong></span>
+            <span>${t('Total Reviews:', 'Wiederholungen:')} <strong class="text-slate-700 dark:text-slate-300">${srsMetrics.totalReviews}</strong></span>
+          </div>
+        </div>
+
         <!-- B1 Grammar Training Progress Card -->
         <div class="rounded-2xl border border-gray-150 bg-white p-5 dark:bg-slate-900 dark:border-slate-850/50 shadow-xs text-left">
           <div class="flex items-center justify-between mb-3">
@@ -140,7 +154,7 @@ export function renderStats(container) {
                 <span>📐</span> ${t('B1 GRAMMAR MASTERY', 'B1-GRAMMATIK FORTSCHRITT')}
               </h3>
               <p class="text-[10px] text-slate-500 dark:text-slate-400 mt-0.5 font-semibold">
-                ${totalGrammarAnswered} ${t('questions answered across 8 topics', 'Fragen in 8 Themen absolviert')}
+                ${totalGrammarAnswered} ${t(`questions answered across ${GRAMMAR_TOPICS.length} topics`, `Fragen in ${GRAMMAR_TOPICS.length} Themen absolviert`)}
               </p>
             </div>
             <button id="stats-open-grammar-btn" class="px-2.5 py-1 rounded-xl bg-emerald-500 hover:bg-emerald-600 text-white text-[11px] font-black transition cursor-pointer">
@@ -279,6 +293,10 @@ export function renderStats(container) {
   if (trainBtn) {
     trainBtn.addEventListener('click', startWeakWordsTraining);
   }
+
+  container.querySelector('#stats-start-srs-btn')?.addEventListener('click', () => {
+    startSRSReviewSession();
+  });
 
   container.querySelector('#stats-open-grammar-btn')?.addEventListener('click', () => {
     setTab('grammar');

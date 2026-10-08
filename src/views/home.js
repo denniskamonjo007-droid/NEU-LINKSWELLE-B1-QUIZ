@@ -1,6 +1,8 @@
 import { state, setTab, setScreen, toggleBookmark, isBookmarked, t, updateSettings } from '../state.js';
 import { VOCAB, ICONS, CLS } from '../data/vocab.js';
 import { speak } from '../utils/audio.js';
+import { getSRSMetrics } from '../utils/srsManager.js';
+import { startSRSReviewSession } from '../views/srsReview.js';
 
 export function renderHome(container) {
   const allWords = Object.values(VOCAB).flat();
@@ -29,6 +31,7 @@ export function renderHome(container) {
   const dailyGoalPct = Math.min(100, Math.round((todayActivity / dailyGoal) * 100));
 
   const topicsList = Object.keys(VOCAB);
+  const srsMetrics = getSRSMetrics();
 
   container.innerHTML = `
     <div class="pb-24">
@@ -92,7 +95,54 @@ export function renderHome(container) {
         </div>
       </div>
 
-      <!-- NEW: B1 Grammar Training Center Feature Banner -->
+      <!-- NEW: Spaced Repetition (SRS) Daily Review Banner -->
+      <div class="m-4">
+        <div id="home-srs-banner-btn" class="rounded-2xl border-2 border-indigo-500/30 bg-gradient-to-br from-indigo-50 via-purple-50 to-white dark:from-indigo-950/40 dark:via-slate-900 dark:to-slate-900 p-5 shadow-sm hover:shadow-md transition active:scale-[0.99] cursor-pointer relative overflow-hidden">
+          <div class="absolute -right-4 -bottom-4 text-6xl opacity-10 select-none pointer-events-none">🧠</div>
+          <div class="flex items-center justify-between">
+            <span class="px-2.5 py-0.5 rounded-full bg-indigo-600 text-white text-[9px] font-black uppercase tracking-wider flex items-center gap-1">
+              <span>🧠</span> ${t('SPACED REPETITION (SM-2)', 'SPACED REPETITION (SM-2)')}
+            </span>
+            <span class="px-2.5 py-0.5 rounded-full text-xs font-black ${
+              srsMetrics.dueCount > 0
+                ? 'bg-amber-100 text-amber-800 dark:bg-amber-950/60 dark:text-amber-300'
+                : 'bg-emerald-100 text-emerald-800 dark:bg-emerald-950/60 dark:text-emerald-300'
+            }">
+              ${srsMetrics.dueCount > 0 ? `⏰ ${srsMetrics.dueCount} ${t('cards due today', 'Karten heute fällig')}` : `✅ ${t('Caught Up', 'Erledigt')}`}
+            </span>
+          </div>
+
+          <h2 class="text-base font-black text-slate-900 dark:text-white mt-2 flex items-center gap-2">
+            <span>${srsMetrics.dueCount > 0 ? `${srsMetrics.dueCount} ${t('Cards Ready for Daily Review', 'Karten zur Wiederholung bereit')}` : t('Daily Review Completed!', 'Tägliche Wiederholung abgeschlossen!')}</span>
+          </h2>
+
+          <p class="text-xs text-slate-600 dark:text-slate-300 mt-1 leading-relaxed">
+            ${t(
+              'Leitner SM-2 algorithm schedules words and grammar rules for review at increasing intervals (1d → 3d → 7d → 16d → 30d) for permanent retention.',
+              'Der Leitner SM-2 Algorithmus wiederholt Vokabeln & Grammatik nach festen Intervallen (1T → 3T → 7T → 16T → 30T) für echtes Langzeitwissen.'
+            )}
+          </p>
+
+          <div class="mt-3.5 flex items-center justify-between pt-3 border-t border-indigo-200/50 dark:border-indigo-800/40">
+            <div class="flex items-center gap-2 text-[10.5px] font-bold text-slate-600 dark:text-slate-300">
+              <span class="px-2 py-0.5 rounded-md bg-amber-50 dark:bg-amber-950/40 text-amber-700 dark:text-amber-300">
+                ⏰ ${srsMetrics.dueCount} ${t('Due', 'Fällig')}
+              </span>
+              <span class="px-2 py-0.5 rounded-md bg-blue-50 dark:bg-blue-950/40 text-blue-700 dark:text-blue-300">
+                🌱 ${srsMetrics.learningCount} ${t('Learning', 'Lernen')}
+              </span>
+              <span class="px-2 py-0.5 rounded-md bg-emerald-50 dark:bg-emerald-950/40 text-emerald-700 dark:text-emerald-300">
+                🌳 ${srsMetrics.matureCount} ${t('Mature', 'Gemeistert')}
+              </span>
+            </div>
+            <button id="home-srs-start-action-btn" class="px-3.5 py-1.5 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-black shadow-xs cursor-pointer transition active:scale-95">
+              ${srsMetrics.dueCount > 0 ? `${t('Review Now', 'Jetzt wiederholen')} ›` : `${t('Review Ahead', 'Wiederholen')} ›`}
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- B1 Grammar Training Center Feature Banner -->
       <div class="m-4">
         <div id="home-grammar-banner-btn" class="rounded-2xl border-2 border-emerald-500/30 bg-gradient-to-br from-emerald-50 via-teal-50 to-white dark:from-emerald-950/40 dark:via-slate-900 dark:to-slate-900 p-5 shadow-sm hover:shadow-md transition active:scale-[0.99] cursor-pointer relative overflow-hidden">
           <div class="absolute -right-4 -bottom-4 text-6xl opacity-10 select-none pointer-events-none">📐</div>
@@ -101,7 +151,7 @@ export function renderHome(container) {
               ✨ ${t('GRAMMAR ONLY SECTION', 'GRAMMATIK-ZENTRUM')}
             </span>
             <span class="text-xs font-black text-emerald-700 dark:text-emerald-400 flex items-center gap-1">
-              800 ${t('Questions', 'Fragen')} ›
+              1,025 ${t('Questions', 'Fragen')} ›
             </span>
           </div>
           <h2 class="text-base font-black text-slate-900 dark:text-white mt-2">
@@ -109,13 +159,13 @@ export function renderHome(container) {
           </h2>
           <p class="text-xs text-slate-600 dark:text-slate-300 mt-1 leading-relaxed">
             ${t(
-              '100 questions per topic • 5 question types (Multiple Choice, Gaps, Translations, Word Order, Error Spotting) • Repeated practice focus.',
-              '100 Fragen pro Thema • 5 Fragetypen (Multiple Choice, Lückentext, Satzübersetzung, Satzbau, Fehlersuche) • Fokus auf wiederholtes Üben.'
+              '17 complete topics • 5 question types (Multiple Choice, Gaps, Translations, Word Order, Error Spotting) with English translations.',
+              '17 Themen • 5 Fragetypen (Multiple Choice, Lückentext, Satzübersetzung, Satzbau, Fehlersuche) mit englischer Übersetzung.'
             )}
           </p>
           <div class="mt-3.5 flex items-center justify-between pt-3 border-t border-emerald-200/50 dark:border-emerald-800/40">
             <div class="flex gap-2 text-[10px] font-bold text-slate-500 dark:text-slate-400">
-              <span>🎯 8 ${t('Topics', 'Themen')}</span>
+              <span>🎯 17 ${t('Topics', 'Themen')}</span>
               <span>•</span>
               <span>🔀 ${t('Word Order', 'Satzbau')}</span>
               <span>•</span>
@@ -219,6 +269,13 @@ export function renderHome(container) {
   `;
 
   // Attach Event Listeners
+  container.querySelector('#home-srs-banner-btn')?.addEventListener('click', () => {
+    startSRSReviewSession();
+  });
+  container.querySelector('#home-srs-start-action-btn')?.addEventListener('click', (e) => {
+    e.stopPropagation();
+    startSRSReviewSession();
+  });
   container.querySelector('#home-grammar-banner-btn')?.addEventListener('click', () => {
     setTab('grammar');
   });
@@ -240,7 +297,6 @@ export function renderHome(container) {
       const topic = el.getAttribute('data-topic');
       if (topic) {
         state.selectedTopic = topic;
-        state.activeFlashcardLevel = null;
         setScreen('topic');
       }
     });

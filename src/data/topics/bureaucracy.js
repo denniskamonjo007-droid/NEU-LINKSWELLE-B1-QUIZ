@@ -79,5 +79,22 @@ export const bureaucracyVocab = [
   {"g": "unverbindlich", "e": "non-binding", "t": "a"},
   {"g": "vollzählig", "e": "complete in number", "t": "a"},
   {"g": "rechtzeitig", "e": "punctual / in good time", "t": "a"},
-  {"g": "gesetzlich", "e": "statutory / according to law", "t": "a"}
+  {"g": "gesetzlich", "e": "statutory / according to law", "t": "a"},
+
+  // Additional essential B1 official bureaucracy terms
+  {"g": "die Apostille", "e": "the apostille / international authentication", "t": "n"},
+  {"g": "die Vollmacht", "e": "the power of attorney / authorization", "t": "n"},
+  {"g": "der Personalausweis", "e": "the national identity card", "t": "n"},
+  {"g": "der Reisepass", "e": "the passport", "t": "n"},
+  {"g": "die Meldeadresse", "e": "the registered residential address", "t": "n"},
+  {"g": "die Geburtsurkunde", "e": "the birth certificate", "t": "n"},
+  {"g": "die Heiratsurkunde", "e": "the marriage certificate", "t": "n"},
+  {"g": "das Standesamt", "e": "the civil registry office", "t": "n"},
+  {"g": "das Finanzamt", "e": "the tax office", "t": "n"},
+  {"g": "die Fristverlängerung", "e": "the extension of deadline", "t": "n"},
+  {"g": "bevollmächtigen", "e": "to authorize / give power of attorney", "t": "v"},
+  {"g": "verweigern", "e": "to refuse / deny (permission)", "t": "v"},
+  {"g": "widerrufen", "e": "to revoke / rescind", "t": "v"},
+  {"g": "notariell", "e": "notarial / done by notary", "t": "a"},
+  {"g": "formell", "e": "formal / technical", "t": "a"}
 ];
